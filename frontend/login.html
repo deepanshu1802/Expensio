@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+  <div class="box">
+    <h2>Login</h2>
+
+    <input type="email" id="email" placeholder="Enter Email" />
+
+    <input type="password" id="password" placeholder="Enter Password" />
+
+    <button onclick="loginUser()">Login</button>
+    <a href="signup.html">Create New Account</a>    
+  </div>
+
+  <script>
+    function showToast(message) {
+
+      Toastify({
+        text: message,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+      }).showToast();
+    }
+    
+    async function loginUser() {
+
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+
+        if (email === "" || password === "") {
+            showToast("Please fill all fields");
+            return;
+        }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
+
+        const data = await res.json();
+
+        // Save token
+        if (data.token) {
+            localStorage.setItem("token", data.token);
+            showToast("Login Successful ✅");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1500);
+            
+        } else{
+            showToast(data.message);    
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+</html>

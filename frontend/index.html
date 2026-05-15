@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Expense Management System</title>
+
+    <link
+    href="https://cdn-icons-png.flaticon.com/512/2489/2489756.png"
+    rel="icon" 
+    />
+
+    <!-- Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Top Bar -->
+      <!-- <div class="top-bar">
+        <h1>Expense Tracker</h1>
+        <button onclick="toggleTheme()" class="theme-btn">🌙</button>
+        <button onclick="logoutUser()">Logout</button>
+      </div> -->
+
+      <div class="top-bar fade-up">
+        <div>
+          <h1>Expensio</h1>
+          <p class="subtitle">Manage your daily expenses easily</p>
+        </div>
+
+        <div class="top-actions">
+          <button onclick="toggleTheme()" class="theme-btn">🌙</button>
+          <button onclick="logoutUser()" class="logout-btn">Logout</button>
+        </div>
+      </div>
+
+
+      <!-- Form -->
+      <div class="card fade-up delay-1">
+        <input type="text" id="desc" placeholder="Enter expense (e.g. Pizza)" />
+        <input type="number" id="amount" placeholder="Amount (₹)" />
+
+        <select id="category">
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Shopping">Shopping</option>
+        </select>
+
+        <button onclick="addExpense()" id="addBtn">Add</button>
+      </div>
+
+      <!-- Filter -->
+      <div class="card small fade-up delay-2">
+        <select id="filter" onchange="filterExpenses()">
+          <option value="All">All</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Shopping">Shopping</option>
+        </select>
+      </div>
+
+      <div class="stats fade-up delay-3">
+        
+        <div class="stat-card">
+          <h3>Total</h3>
+          <p id="totalStat">₹0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Food</h3>
+          <p id="foodStat">₹0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Travel</h3>
+          <p id="travelStat">₹0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Shopping</h3>
+          <p id="shoppingStat">₹0</p> 
+        </div>
+      </div>
+
+      <div class="card small fade-up delay-4">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search expenses..."
+          onkeyup="searchExpenses()"
+        />
+      </div>
+
+      <div class="card small fade-up delay-5">
+        <select onchange="sortExpenses(this.value)">
+              <option value="">Sort By</option>
+              <option value="latest">Latest</option>
+              <option value="oldest">Oldest</option>
+              <option value="high">Highest Amount</option>
+              <option value="low">Lowest Amount</option>
+        </select>
+      </div>
+
+      <!-- Total -->
+      <h2>Total: ₹ <span id="total">0</span></h2>
+      <button onclick="downloadPDF()" class="download-btn">
+        Download PDF 📄
+      </button>
+
+      <!-- Empty -->
+      <!-- <p id="emptyMsg">No expenses yet 👀</p> -->
+       <div id="emptyMsg">
+
+        <div class="empty-icon">
+          📭
+        </div>
+
+        <h3>No Expenses Yet</h3>
+        <p>
+          Start tracking your expenses
+          to see analytics here.
+        </p>
+      </div>
+
+      <!-- List -->
+      <ul id="list"></ul>
+     
+      <!-- Charts Section -->
+      <div class="charts-grid" id="chartsSection">
+
+        <!-- Pie Chart -->
+        <div class="card">
+          <canvas id="expenseChart"></canvas>
+        </div>
+        
+        <!-- Monthly Chart -->
+        <div class="card">
+          <h2>Monthly Analytics 📈</h2>
+          <canvas id="monthlyChart"></canvas>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  </body>
+</html>

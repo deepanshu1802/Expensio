@@ -1,5 +1,5 @@
-const Expense = require("./models/Expense");
-const User = require("./models/User");
+const Expense = require("./models/expenseModel");
+const User = require("./models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("./middleware/authMiddleware");

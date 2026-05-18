@@ -55,7 +55,7 @@ async function fetchExpenses() {
   try {
     const token = localStorage.getItem("token");
 
-const res = await fetch("http://localhost:5000/api/expenses", {
+const res = await fetch("https://expensio-backend-c5pe.onrender.com/api/expenses", {
   headers: {
     authorization: token,
   },
@@ -96,12 +96,12 @@ async function addExpense() {
       Processing...
 `   ;
     btn.disabled = true;
-    let url = "http://localhost:5000/api/expenses";
+    let url = "https://expensio-backend-c5pe.onrender.com/api/expenses";
     let method = "POST";
 
     // Update Mode
     if (editId) {
-      url = `http://localhost:5000/api/expenses/${editId}`;
+      url = `https://expensio-backend-c5pe.onrender.com/api/expenses/${editId}`;
       method = "PUT";
     }
 
@@ -328,7 +328,7 @@ function renderMonthlyChart() {
 // Delete
 async function deleteExpense(id) {
   try {
-    await fetch(`http://localhost:5000/api/expenses/${id}`, {
+    await fetch(`https://expensio-backend-c5pe.onrender.com/api/expenses/${id}`, {
       method: "DELETE",
 
       headers: {

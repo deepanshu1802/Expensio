@@ -93,7 +93,22 @@
           <p id="shoppingStat">₹0</p> 
         </div>
       </div>
+      
+      <div class="card budget-card fade-up delay-4">
+        <h2>Monthly Budget 💰</h2>
 
+        <input
+        type="number"
+        id="budgetInput"
+        placeholder="Set your monthly budget"
+        />
+
+        <button onclick="saveBudget()">Save Budget</button>
+
+        <h3 id="budgetStatus">No budget set</h3>
+      </div>
+      
+    
       <div class="card small fade-up delay-4">
         <input
           type="text"

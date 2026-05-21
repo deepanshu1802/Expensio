@@ -487,3 +487,17 @@ body.dark .stat-card {
     transform: translateY(0);
   }
 }
+
+.budget-card {
+  text-align: center;
+}
+
+.budget-card h2 {
+  margin-bottom: 15px;
+}
+
+#budgetStatus {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 700;
+}

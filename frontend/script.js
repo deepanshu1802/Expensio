@@ -2,6 +2,8 @@ let expenses = [];
 let chart;
 let monthlyChart;
 let editId = null;
+let monthlyBudget =
+  localStorage.getItem("budget") || 0;
 
 // Reusable Toast Notification Function
 function showToast(message, type = "success") {
@@ -228,6 +230,7 @@ function displayExpenses(data) {
 
   renderChart();
   renderMonthlyChart();
+  updateBudgetUI();
 }
 // Render Monthly Expense Analytics Chart
 function renderMonthlyChart() {
@@ -579,3 +582,53 @@ function sortExpenses(type) {
   displayExpenses(sortedExpenses);
 }
 
+function saveBudget() {
+
+  const budget =
+    document.getElementById("budgetInput").value;
+
+  monthlyBudget = Number(budget);
+
+  localStorage.setItem("budget", monthlyBudget);
+
+  updateBudgetUI();
+
+  showToast("Budget Saved 💰");
+}
+
+function updateBudgetUI() {
+
+  let totalExpense = expenses.reduce(
+    (sum, item) => sum + item.amount,
+    0
+  );
+
+  const status =
+    document.getElementById("budgetStatus");
+
+  if (!monthlyBudget || monthlyBudget === 0) {
+
+    status.innerText = "No budget set";
+
+    return;
+  }
+
+  let remaining =
+    monthlyBudget - totalExpense;
+
+  if (remaining < 0) {
+
+    status.innerHTML =
+      `⚠️ Budget Exceeded by ₹${Math.abs(remaining)}`;
+
+    status.style.color = "#ef4444";
+  }
+
+  else {
+
+    status.innerHTML =
+      `₹${remaining} Remaining`;
+
+    status.style.color = "#10b981";
+  }
+}

@@ -85,7 +85,7 @@ app.post("/api/auth/login", async (req, res) => {
       {
         id: user._id,
       },
-      "secretkey",
+       process.env.JWT_SECRET,
       {
         expiresIn: "1d",
       }
@@ -144,7 +144,14 @@ app.get("/api/expenses", authMiddleware, async (req, res) => {
 /* Delete Expense API */
 app.delete("/api/expenses/:id", authMiddleware, async (req, res) => {
   try {
-    await Expense.findByIdAndDelete(req.params.id);
+    const deletedExpense = await Expense.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!deletedExpense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
 
     res.status(200).json({
       message: "Expense Deleted ✅",
@@ -160,11 +167,18 @@ app.delete("/api/expenses/:id", authMiddleware, async (req, res) => {
 /* Update Expense API */
 app.put("/api/expenses/:id", authMiddleware, async (req, res) => {
   try {
-    const updatedExpense = await Expense.findByIdAndUpdate(
-      req.params.id,
+    const updatedExpense = await Expense.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        userId: req.user.id,
+      },
       req.body,
       { new: true }
     );
+
+    if (!updatedExpense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
 
     res.status(200).json({
       message: "Expense Updated ✅",
@@ -178,7 +192,7 @@ app.put("/api/expenses/:id", authMiddleware, async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 //  MongoDB Connection //
 mongoose
